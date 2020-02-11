@@ -4,6 +4,7 @@ import bgfx.Memory;
 import bgfx.ProgramHandle;
 import bgfx.ShaderHandle;
 import bgfx.UniformHandle;
+import bgfx.UniformType;
 import cpp.Reference;
 import haxe.io.Bytes;
 
@@ -29,8 +30,8 @@ final class Program {
 		fsh = createShader(fshMemory);
 	}
 
-	public function createUniform(name:String):UniformHandle {
-		return untyped __cpp__('bgfx::createUniform({0}.c_str(),  bgfx::UniformType::Sampler);', name);
+	public function createUniform(name:String, type:UniformType):UniformHandle {
+		return untyped __cpp__('bgfx::createUniform({0}.c_str(),  {1});', name, type);
 	}
 
 	public function setUniform():Void {

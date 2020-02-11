@@ -57,6 +57,34 @@ final class Gfx {
 		untyped __cpp__('bgfx::setTexture(0, {0},  {1}->handle)', uniform, texture);
 	}
 
+	public function setFloat1Uniform(uniform:UniformHandle, x:Single = 0.0):Void {
+		untyped __cpp__('
+			float data[1] = { {1} };
+			bgfx::setUniform({0}, &data, 1)
+		', uniform, x);
+	}
+
+	public function setFloat2Uniform(uniform:UniformHandle, x:Single = 0.0, y:Single = 0.0):Void {
+		untyped __cpp__('
+			float data[2] = { {1}, {2} };
+			bgfx::setUniform({0}, &data, 2)
+		', uniform, x, y);
+	}
+
+	public function setFloat3Uniform(uniform:UniformHandle, x:Single = 0.0, y:Single = 0.0, z:Single = 0.0):Void {
+		untyped __cpp__('
+			float data[3] = { {1}, {2}, {3} };
+			bgfx::setUniform({0}, &data, 3)
+		', uniform, x, y, z);
+	}
+
+	public function setFloat4Uniform(uniform:UniformHandle, x:Single = 0.0, y:Single = 0.0, z:Single = 0.0, w:Single = 0.0):Void {
+		untyped __cpp__('
+			float data[4] = { {1}, {2}, {3}, {4} };
+			bgfx::setUniform({0}, &data, 4)
+		', uniform, x, y, z, w);
+	}
+
 	//? what is it for?
 	public function setState():Void {
 		untyped __cpp__('
