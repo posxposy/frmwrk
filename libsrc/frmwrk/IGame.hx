@@ -1,0 +1,4 @@
+package frmwrk;
+
+interface IGame {
+}

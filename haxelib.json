@@ -1,0 +1,12 @@
+{
+	"name": "frmwrk",
+	"url" : "https://github.com/dmitryhryppa/frmwrk",
+	"license": "MIT",
+	"tags": ["directx", "opengl", "bgfx", "game"],
+	"description": "small framework for desktop games",
+	"version": "0.1.0",
+	"classPath": "libsrc",
+	"releasenote": "",
+	"contributors": ["dmitryhryppa"],
+	"dependencies": {}
+}
