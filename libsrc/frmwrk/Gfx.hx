@@ -58,10 +58,7 @@ final class Gfx {
 	}
 
 	public function setFloat1Uniform(uniform:UniformHandle, x:Single = 0.0):Void {
-		untyped __cpp__('
-			float data[1] = { {1} };
-			bgfx::setUniform({0}, &data, 1)
-		', uniform, x);
+		untyped __cpp__('bgfx::setUniform({0}, &{1}, 1)', uniform, x);
 	}
 
 	public function setFloat2Uniform(uniform:UniformHandle, x:Single = 0.0, y:Single = 0.0):Void {
