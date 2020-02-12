@@ -1,10 +1,12 @@
 package frmwrk;
 
 import bgfx.UniformHandle;
+import cpp.UInt64;
 import frmwrk.math.Glm;
 import frmwrk.math.Mat4;
 
 @:headerCode('
+	#include <bgfx/defines.h>
 	#include <bgfx/bgfx.h>
 	#include <glm/glm.hpp>
 	#include <glm/gtc/type_ptr.hpp>
@@ -82,15 +84,8 @@ final class Gfx {
 		', uniform, x, y, z, w);
 	}
 
-	//? what is it for?
-	public function setState():Void {
-		untyped __cpp__('
-		bgfx::setState(0
-				| BGFX_STATE_WRITE_RGB
-				| BGFX_STATE_WRITE_A
-				| BGFX_STATE_WRITE_Z
-				| BGFX_STATE_DEPTH_TEST_LESS
-				)
-		');
+	public function setState(state:UInt64 = -1):Void {
+		final mask = state == -1 ? untyped BGFX_STATE_DEFAULT : state;
+		untyped __cpp__('bgfx::setState(0 | {0})', mask);
 	}
 }
