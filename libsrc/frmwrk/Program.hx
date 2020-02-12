@@ -41,6 +41,10 @@ final class Program {
 		program = untyped __cpp__('bgfx::createProgram({0}, {1}, true)', vsh, fsh);
 	}
 
+	public function dispose():Void {
+		untyped __cpp__('bgfx::destroy({0})', program);
+	}
+
 	extern inline function createShader(memory:Memory):ShaderHandle {
 		return untyped __cpp__('bgfx::createShader({0})', memory);
 	}

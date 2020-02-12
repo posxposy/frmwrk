@@ -24,4 +24,8 @@ final class IndexBuffer {
 			{0} = bgfx::createIndexBuffer(bgfx::makeRef((const void*)&({1}[0]), {2} ));
 		', ibh, this.data.getData(), this.data.length);
 	}
+
+	public function dispose():Void {
+		untyped __cpp__('bgfx::destroy({0})', ibh);
+	}
 }

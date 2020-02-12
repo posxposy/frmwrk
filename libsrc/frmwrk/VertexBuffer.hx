@@ -65,4 +65,11 @@ final class VertexBuffer {
 			{1} = bgfx::createVertexBuffer(bgfx::makeRef((const void*)&({2}[0]), {3}), {0});
 		', layout, vbh, data.getData(), data.length);
 	}
+
+	public function dispose():Void {
+		untyped __cpp__('
+			bgfx::destroy({0});
+			bgfx::destroy({1})
+		', vbh, layout);
+	}
 }
