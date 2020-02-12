@@ -44,7 +44,7 @@ final class Gfx {
 	}
 
 	public function submit(program:Program):Void {
-		untyped __cpp__('bgfx::submit({0}, {1})', viewId, @:privateAccess program.program);
+		untyped __cpp__('bgfx::submit({0}, {1}->program)', viewId, program);
 	}
 
 	public function setViewTransform(view:Mat4, projection:Mat4):Void {
