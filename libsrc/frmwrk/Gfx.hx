@@ -1,6 +1,8 @@
 package frmwrk;
 
+import bgfx.InstanceDataBuffer;
 import bgfx.UniformHandle;
+import cpp.Star;
 import cpp.UInt64;
 import frmwrk.math.Glm;
 import frmwrk.math.Mat4;
@@ -87,5 +89,21 @@ final class Gfx {
 	public function setState(state:UInt64 = -1):Void {
 		final mask = state == -1 ? untyped BGFX_STATE_DEFAULT : state;
 		untyped __cpp__('bgfx::setState(0 | {0})', mask);
+	}
+
+	public function isInstancingSupported():Bool {
+		return untyped __cpp__('0 != (BGFX_CAPS_INSTANCING & bgfx::getCaps()->supported)');
+	}
+
+	public function getAvailInstanceDataBuffer(count:Int, stride:Int):Int {
+		return untyped __cpp__('bgfx::getAvailInstanceDataBuffer({0}, {1})', count, stride);
+	}
+
+	public function allocInstanceDataBuffer(idb:Star<InstanceDataBuffer>, count:Int, stride:Int):Void {
+		untyped __cpp__('bgfx::allocInstanceDataBuffer({0}, {1}, {2})', idb, count, stride);
+	}
+
+	public function setInstanceDataBuffer(idb:Star<InstanceDataBuffer>, start:Int, count:Int) {
+		untyped __cpp__('bgfx::setInstanceDataBuffer({0})', idb, start, count);
 	}
 }
