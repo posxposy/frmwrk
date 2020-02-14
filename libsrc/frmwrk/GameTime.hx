@@ -1,6 +1,6 @@
 package frmwrk;
 
-@:allow(frmwrk.App)
+@:allow(frmwrk.Frmwrk)
 final class GameTime {
 	public var fps(default, null):Int = 0;
 	public var stamp(get, null):Float;

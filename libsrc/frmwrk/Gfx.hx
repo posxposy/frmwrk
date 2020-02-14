@@ -13,7 +13,7 @@ import frmwrk.math.Mat4;
 	#include <glm/glm.hpp>
 	#include <glm/gtc/type_ptr.hpp>
 ')
-@:allow(frmwrk.App)
+@:allow(frmwrk.Frmwrk)
 final class Gfx {
 	final viewId:Int;
 

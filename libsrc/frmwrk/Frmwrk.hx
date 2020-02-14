@@ -35,9 +35,6 @@ import sys.io.File;
 	</target>
 ')
 @:headerCode('
-	#include <Windows.h>
-	#include <memory>
-
 	#include <bx/bx.h>
 	#include <bx/math.h>
 	#include <bgfx/bgfx.h>
@@ -55,7 +52,7 @@ import sys.io.File;
 	GLFWwindow *window = nullptr;
 ')
 @:headerInclude('./HelpersExt.h')
-final class App {
+final class Frmwrk {
 	public var showDebugStats:Bool = true;
 	public var width(default, null):Int;
 	public var height(default, null):Int;
@@ -88,7 +85,7 @@ final class App {
 				return false;
 			}
 
-			bgfx::renderFrame();
+			//bgfx::renderFrame();
 			bgfx::Init init;
 			init.type = {5};
 			init.resolution.width = {1};
@@ -122,11 +119,46 @@ final class App {
 		return true;
 	}
 
-	public function run(game:Game):Void {
+	static var _game:IApp;
+
+	public function run(game:IApp):Void {
+		_game = game;
 		untyped __cpp__('
+			glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mode) {
+				switch (action) {
+				case GLFW_PRESS:
+					::frmwrk::IApp_obj::onKeyDown({1}, key);
+					break;
+				case GLFW_RELEASE:
+					::frmwrk::IApp_obj::onKeyUp({1}, key);
+					break;
+				default:
+					break;
+				}
+			});
+
+			glfwSetCursorPosCallback(window, [](GLFWwindow *window, double x, double y) {
+				::frmwrk::IApp_obj::onMouseMove({1}, x, y);
+			});
+			glfwSetScrollCallback(window, [](GLFWwindow *window, double x, double y) {
+				::frmwrk::IApp_obj::onMouseScroll({1}, y);
+			});
+			glfwSetMouseButtonCallback(window, [](GLFWwindow *window, int button, int action, int mods) {
+				switch (action) {
+				case GLFW_PRESS:
+					::frmwrk::IApp_obj::onMouseDown({1}, button);
+					break;
+				case GLFW_RELEASE:
+					::frmwrk::IApp_obj::onMouseUp({1}, button);
+					break;
+				default:
+					break;
+				}
+			});
+
 			const bgfx::ViewId clearViewId = {0};
 			bgfx::setViewRect(clearViewId, 0, 0, bgfx::BackbufferRatio::Equal);
-		', @:privateAccess gfx.viewId);
+		', @:privateAccess gfx.viewId, _game);
 
 		gfx.clearColor(0x443355FF);
 		while (!glfwWindowShouldClose(window)) {
