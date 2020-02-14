@@ -2,7 +2,7 @@ package frmwrk.math;
 
 @:forward(x, y, z)
 abstract Vec3(Vec3Impl) from Vec3Impl {
-	public inline function new(x:Single, y:Single, z:Single) {
+	public inline function new(x:Single = 0, y:Single = 0, z:Single = 0) {
 		this = Vec3Impl.create(x, y, z);
 	}
 
@@ -17,7 +17,7 @@ abstract Vec3(Vec3Impl) from Vec3Impl {
 
 	@:op(A - B)
 	public inline function sub(vec:Vec3):Vec3 {
-		return untyped __cpp__('{0} + {1}', this, vec);
+		return untyped __cpp__('{0} - {1}', this, vec);
 	}
 
 	@:op(A * B)
@@ -27,7 +27,7 @@ abstract Vec3(Vec3Impl) from Vec3Impl {
 
 	@:op(A * B)
 	public inline function multf(value:Single):Vec3 {
-		return untyped __cpp__('{0} * {1}', this, value);
+		return untyped __cpp__('{0} * (float){1}', this, value);
 	}
 }
 

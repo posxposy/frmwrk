@@ -8,6 +8,8 @@ import cpp.Void;
 @:include('glm/glm.hpp')
 @:native('glm')
 extern class Glm {
+	@:native('glm::cross') public static function crossVec3(v1:Vec3, v2:Vec3):Vec3;
+	@:native('glm::normalize') public static function normalizeVec3(v:Vec3):Vec3;
 	@:native('glm::radians') public static function radians(degrees:Single):Single;
 	@:native('glm::perspective') public static function perspective(fovy:Single, aspect:Single, zNear:Single, zFar:Single):Mat4;
 	@:native('glm::lookAt') public static function lookAt(eye:Vec3, center:Vec3, up:Vec3):Mat4;
