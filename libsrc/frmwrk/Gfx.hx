@@ -3,7 +3,7 @@ package frmwrk;
 import bgfx.InstanceDataBuffer;
 import bgfx.UniformHandle;
 import cpp.Star;
-import cpp.UInt64;
+import frmwrk.States;
 import frmwrk.math.Glm;
 import frmwrk.math.Mat4;
 
@@ -86,9 +86,8 @@ final class Gfx {
 		', uniform, x, y, z, w);
 	}
 
-	public function setState(state:UInt64 = -1):Void {
-		final mask = state == -1 ? untyped BGFX_STATE_DEFAULT : state;
-		untyped __cpp__('bgfx::setState(0 | {0})', mask);
+	public function setState(state:States):Void {
+		untyped __cpp__('bgfx::setState({0})', state);
 	}
 
 	public function isInstancingSupported():Bool {

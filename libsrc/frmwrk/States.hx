@@ -1,13 +1,10 @@
 package frmwrk;
 
-import cpp.UInt64;
+import cpp.UInt64_t;
 
-/**
-	Color RGB/alpha/depth write. When it's not specified write will be disabled.
- */
 @:unreflective
 @:include('bgfx/defines.h')
-extern enum abstract WriteState(UInt64) to UInt64 {
+extern enum abstract States(UInt64_t) to UInt64_t from UInt64_t {
 	/**
 		Enable R write.
 	 */
@@ -39,18 +36,17 @@ extern enum abstract WriteState(UInt64) to UInt64 {
 	var WriteZ;
 
 	/**
+		Enable RGB write.
+	 */
+	@:native('BGFX_STATE_WRITE_RGB')
+	var WriteRGB;
+
+	/**
 		Write all channels mask.
 	 */
 	@:native('BGFX_STATE_WRITE_MASK')
 	var WriteAll;
-}
 
-/**
-	When it's not specified depth test will be disabled.
- */
-@:unreflective
-@:include('bgfx/defines.h')
-extern enum abstract DepthState(UInt64) to UInt64 {
 	@:native('BGFX_STATE_DEPTH_TEST_LESS')
 	var DepthLess;
 	@:native('BGFX_STATE_DEPTH_TEST_LEQUAL')
@@ -65,26 +61,10 @@ extern enum abstract DepthState(UInt64) to UInt64 {
 	var DepthNotEqual;
 	@:native('BGFX_STATE_DEPTH_TEST_ALWAYS')
 	var DepthAlways;
-}
-
-/**
-	When it's not specified culling will be disabled.
- */
-@:unreflective
-@:include('bgfx/defines.h')
-extern enum abstract CullState(UInt64) to UInt64 {
 	@:native('BGFX_STATE_CULL_CW')
 	var Clockwise;
 	@:native('BGFX_STATE_CULL_CCW')
 	var CounterClockwise;
-}
-
-/**
-	When it's not specified Triangle List will be enabled.
- */
-@:unreflective
-@:include('bgfx/defines.h')
-extern enum abstract RenderState(UInt64) to UInt64 {
 	@:native('BGFX_STATE_PT_TRISTRIP')
 	var TriangleStrip;
 	@:native('BGFX_STATE_PT_LINES')
@@ -93,4 +73,9 @@ extern enum abstract RenderState(UInt64) to UInt64 {
 	var LinesStrip;
 	@:native('BGFX_STATE_PT_POINTS')
 	var Points;
+
+	@:op(A | B)
+	public inline function bitwiseOr(v:States):States {
+		return untyped __cpp__('{0} | {1}', this, v);
+	}
 }
