@@ -1,5 +1,6 @@
 package frmwrk.math;
 
+@:notNull
 @:forward(x, y, z)
 abstract Vec3(Vec3Impl) from Vec3Impl {
 	public inline function new(x:Single = 0, y:Single = 0, z:Single = 0) {

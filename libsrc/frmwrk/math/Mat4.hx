@@ -1,5 +1,6 @@
 package frmwrk.math;
 
+@:notNull
 abstract Mat4(Mat4Impl) from Mat4Impl {
 	public inline function new(val:Mat4Impl) {
 		this = val;

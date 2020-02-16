@@ -2,6 +2,7 @@ package frmwrk;
 
 import cpp.UInt64_t;
 
+@:notNull
 @:unreflective
 @:include('bgfx/defines.h')
 extern enum abstract States(UInt64_t) to UInt64_t from UInt64_t {
