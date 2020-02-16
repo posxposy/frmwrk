@@ -80,7 +80,7 @@ final class Frmwrk {
 				return false;
 			}
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-			window = glfwCreateWindow({1}, {2}, "helloworld", nullptr, nullptr);
+			window = glfwCreateWindow({1}, {2}, "helloworld", {3} ? glfwGetPrimaryMonitor() : nullptr, nullptr);
 			if (!window) {
 				return false;
 			}
