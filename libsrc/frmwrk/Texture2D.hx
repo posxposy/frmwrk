@@ -27,7 +27,7 @@ class Texture2D {
 	extern var container:Star<ImageContainer>;
 
 	@:allow(frmwrk.Res)
-	function new(data:Bytes) {
+	function new(data:Bytes, flags:TextureFlags) {
 		untyped __cpp__('
 
 		', data.getData(), data.length, container);
@@ -49,10 +49,10 @@ class Texture2D {
 			, 1 < {2}->m_numMips
 			, {2}->m_numLayers
 			, bgfx::TextureFormat::Enum({2}->m_format)
-			, BGFX_TEXTURE_NONE|BGFX_SAMPLER_NONE
+			, {4}
 			, mem
 			)
-		', data.getData(), data.length, container, handle);
+		', data.getData(), data.length, container, handle, flags);
 
 	}
 
