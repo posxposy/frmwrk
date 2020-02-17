@@ -12,6 +12,8 @@ import sys.io.File;
 		<compilerflag value="-I${haxelib:frmwrk}/bimg/include/"/>
 		<compilerflag value="-I${haxelib:frmwrk}/glm/"/>
 		<compilerflag value="-I${haxelib:frmwrk}/glfw/include/"/>
+		<compilerflag value="-I${haxelib:frmwrk}/assimp/include/"/>
+		<compilerflag value="-I${haxelib:frmwrk}/assimp/build/include/"/>
 	</files>
 
 	<files id="__main__">
@@ -21,6 +23,8 @@ import sys.io.File;
 		<compilerflag value="-I${haxelib:frmwrk}/bimg/include/"/>
 		<compilerflag value="-I${haxelib:frmwrk}/glm/"/>
 		<compilerflag value="-I${haxelib:frmwrk}/glfw/include/"/>
+		<compilerflag value="-I${haxelib:frmwrk}/assimp/include/"/>
+		<compilerflag value="-I${haxelib:frmwrk}/assimp/build/include/"/>
 	</files>
 
 	<target id="haxe" tool="linker" toolid="exe">
@@ -32,6 +36,7 @@ import sys.io.File;
 		<lib name="${haxelib:frmwrk}/bgfx/.build/win32_vs2019/bin/bimgRelease.lib" />
 		<lib name="${haxelib:frmwrk}/bgfx/.build/win32_vs2019/bin/bimg_decodeRelease.lib" />
 		<lib name="${haxelib:frmwrk}/glfw/lib/glfw3dll.lib" />
+		<lib name="${haxelib:frmwrk}/assimp/build/code/Release/assimp-vc142-mt.lib" />
 	</target>
 ')
 @:headerCode('
