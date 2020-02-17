@@ -30,12 +30,14 @@ import sys.io.File;
 	<target id="haxe" tool="linker" toolid="exe">
 		<lib name="gdi32.lib"/>
 		<lib name="psapi.lib"/>
+		<lib name="user32.lib"/>
+		<lib name="shell32.lib"/>
 
 		<lib name="${haxelib:frmwrk}/bgfx/.build/win32_vs2019/bin/bgfxRelease.lib" />
 		<lib name="${haxelib:frmwrk}/bgfx/.build/win32_vs2019/bin/bxRelease.lib" />
 		<lib name="${haxelib:frmwrk}/bgfx/.build/win32_vs2019/bin/bimgRelease.lib" />
 		<lib name="${haxelib:frmwrk}/bgfx/.build/win32_vs2019/bin/bimg_decodeRelease.lib" />
-		<lib name="${haxelib:frmwrk}/glfw/lib/glfw3dll.lib" />
+		<lib name="${haxelib:frmwrk}/glfw/build/src/Release/glfw3.lib" />
 		<lib name="${haxelib:frmwrk}/assimp/build/code/Release/assimp-vc142-mt.lib" />
 	</target>
 ')
