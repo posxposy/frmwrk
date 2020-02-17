@@ -26,12 +26,11 @@ class Texture2D {
 	extern var handle:TextureHandle;
 	extern var container:Star<ImageContainer>;
 
+	var path:String;
+
 	@:allow(frmwrk.Res)
-	function new(data:Bytes, flags:TextureFlags) {
-		untyped __cpp__('
-
-		', data.getData(), data.length, container);
-
+	function new(path:String, data:Bytes, flags:TextureFlags) {
+		this.path = path;
 		untyped __cpp__('
 			bx::DefaultAllocator allocator;
 			{2} = bimg::imageParse(&allocator, (const void*)&({0}[0]), (uint32_t){1});
@@ -57,6 +56,7 @@ class Texture2D {
 	}
 
 	public function dispose():Void {
+		@:privateAccess Res.tex2dCache.remove(path);
 		untyped __cpp__('bimg::imageFree({0})', container);
 	}
 }
