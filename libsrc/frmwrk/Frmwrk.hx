@@ -1,6 +1,7 @@
 package frmwrk;
 
 import bgfx.RenderType;
+import frmwrk.input.MouseMode;
 import haxe.io.Bytes;
 import sys.io.File;
 
@@ -193,11 +194,19 @@ final class Frmwrk {
 		');
 	}
 
-	public inline extern function bytesToMemory(bytes:Bytes):BgfxMemory {
-		return untyped __cpp__('Helpers::getMemory( (uint8_t *const)&({0}[0]), {1} )', bytes.getData(), bytes.length);
+	public function setMouseCursorMode(mode:MouseMode):Void {
+		untyped __cpp__('
+			int flag = GLFW_CURSOR_NORMAL;
+			if ({1} == 1) {
+				flag = GLFW_CURSOR_HIDDEN;
+			} else if ({1} == 2) {
+				flag = GLFW_CURSOR_DISABLED;
+			}
+			glfwSetInputMode({0}, GLFW_CURSOR, flag)
+		', window, mode);
 	}
 
-	public inline extern function glfwWindowShouldClose(window:GLFWwindow):Bool {
+	inline extern function glfwWindowShouldClose(window:GLFWwindow):Bool {
 		return untyped __cpp__('glfwWindowShouldClose({0})', window);
 	}
 }
@@ -205,11 +214,9 @@ final class Frmwrk {
 @:unreflective
 @:native('const bgfx::Memory *')
 @:include('bgfx/bgfx.h')
-extern class BgfxMemory {
-}
+extern class BgfxMemory {}
 
 @:unreflective
 @:native('GLFWwindow *')
 @:include('GLFW/glfw3.h')
-extern class GLFWwindow {
-}
+extern class GLFWwindow {}
