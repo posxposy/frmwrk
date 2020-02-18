@@ -1,9 +1,0 @@
-{
-	"codedox": {
-		"commentprefix": "\t"
-	},
-	"editor.formatOnSave": true,
-	"editor.codeActionsOnSave": {
-		"source.sortImports": true
-	}
-}
