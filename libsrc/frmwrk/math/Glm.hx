@@ -5,7 +5,7 @@ import cpp.Star;
 import cpp.Void;
 
 @:unreflective
-@:include('glm/glm.hpp')
+@:include('./GlmHeaders.h')
 @:native('glm')
 extern class Glm {
 	@:native('glm::cross') public static function crossVec3(v1:Vec3, v2:Vec3):Vec3;
@@ -18,19 +18,8 @@ extern class Glm {
 	@:native('glm::rotate') public static function rotate(m:Mat4, radians:Single, v:Vec3):Mat4;
 	@:native('glm::value_ptr') public static function valuePtr(m:Mat4):Star<Void>;
 	@:native('glm::pi<float>') public static function pi():Single;
-	/**
-		requires 'glm/gtx/string_cast.hpp'
-		@param m
-		@return String
-	 */
-}
 
-@:headerCode('
-	#include <glm/glm.hpp>
-	#include <glm/gtx/string_cast.hpp>
-')
-class GlmExt {
-	public static function matToString(m:Mat4):String {
+	public static inline function matToString(m:Mat4):String {
 		final chars:ConstCharStar = untyped __cpp__('glm::to_string({0}).c_str()', m);
 		return chars.toString();
 	}
