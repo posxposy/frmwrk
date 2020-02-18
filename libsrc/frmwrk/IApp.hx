@@ -8,6 +8,6 @@ interface IApp {
 	function onKeyUp(key:Int):Void;
 	function onMouseDown(button:Int):Void;
 	function onMouseUp(button:Int):Void;
-	function onMouseMove(x:Float, y:Float):Void;
+	function onMouseMove(x:Int, y:Int):Void;
 	function onMouseScroll(delta:Float):Void;
 }
