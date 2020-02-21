@@ -23,6 +23,9 @@ import haxe.io.Bytes;
 	}
 ')
 class Texture2D {
+	public final width:Int;
+	public final height:Int;
+
 	extern var handle:TextureHandle;
 	extern var container:Star<ImageContainer>;
 
@@ -53,6 +56,8 @@ class Texture2D {
 			)
 		', data.getData(), data.length, container, handle, flags);
 
+		width = untyped __cpp__('{0}->m_width', container);
+		height = untyped __cpp__('{0}->m_height', container);
 	}
 
 	public function dispose():Void {
