@@ -9,5 +9,5 @@ interface IApp {
 	function onMouseDown(button:Int):Void;
 	function onMouseUp(button:Int):Void;
 	function onMouseMove(x:Int, y:Int):Void;
-	function onMouseScroll(delta:Float):Void;
+	function onMouseScroll(delta:Int):Void;
 }
