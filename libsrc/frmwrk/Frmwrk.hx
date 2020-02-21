@@ -41,6 +41,10 @@ import sys.io.File;
 		<lib name="${haxelib:frmwrk}/glfw/build/src/Release/glfw3.lib" />
 		<lib name="${haxelib:frmwrk}/assimp/build/code/Release/assimp-vc142-mt.lib" />
 	</target>
+
+	<compiler id="MSVC" exe="cl.exe">
+		<flag value="-DGLM_FORCE_DEPTH_ZERO_TO_ONE"/>
+	</compiler>
 ')
 @:headerCode('
 	#include <bx/bx.h>
@@ -165,7 +169,6 @@ final class Frmwrk {
 			});
 
 			const bgfx::ViewId clearViewId = {0};
-			bgfx::setViewRect(clearViewId, 0, 0, bgfx::BackbufferRatio::Equal);
 		', @:privateAccess gfx.viewId, _game);
 
 		gfx.clearColor(0x443355FF);
@@ -214,9 +217,11 @@ final class Frmwrk {
 @:unreflective
 @:native('const bgfx::Memory *')
 @:include('bgfx/bgfx.h')
-extern class BgfxMemory {}
+extern class BgfxMemory {
+}
 
 @:unreflective
 @:native('GLFWwindow *')
 @:include('GLFW/glfw3.h')
-extern class GLFWwindow {}
+extern class GLFWwindow {
+}
