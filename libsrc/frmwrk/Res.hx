@@ -117,7 +117,7 @@ final class Res {
 			processNode(scene.ptr.rootNode);
 		}
 
-		scene.destroy();
+		importer.freeScene();
 
 		return new Model(meshes);
 	}
