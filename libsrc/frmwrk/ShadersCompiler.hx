@@ -9,9 +9,10 @@ import sys.io.Process;
 
 final class ShadersCompiler {
 	public static function run(input:String = "shaders", output:String = "assets"):Void {
-		#if autocompl
-		return;
-		#end
+		if (Context.defined("display-details") || Context.defined("display")) {
+			return;
+		}
+
 		final shaders = FileSystem.readDirectory('./$input');
 		final groups:StringMap<Group> = new StringMap();
 		final cwd:String = Path.normalize(Sys.getCwd());
