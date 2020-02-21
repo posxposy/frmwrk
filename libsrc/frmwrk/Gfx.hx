@@ -21,6 +21,10 @@ final class Gfx {
 		this.viewId = viewId;
 	}
 
+	public function setViewRect(id:Int, x:Int, y:Int, w:Int, h:Int):Void {
+		untyped __cpp__('bgfx::setViewRect({0}, {1}, {2}, {3}, {4})', id, x, y, w, h);
+	}
+
 	/**
 		Set view clear flags.
 		@param color
@@ -35,6 +39,10 @@ final class Gfx {
 	 */
 	public function debugTextPrint(column:Int, row:Int, text:String):Void {
 		untyped __cpp__('bgfx::dbgTextPrintf({0}, {1}, 0x0f, {2}.c_str())', column, row, text);
+	}
+
+	public function debugTextClear():Void {
+		untyped __cpp__('bgfx::dbgTextClear()');
 	}
 
 	public function setVertexBuffer(vb:VertexBuffer):Void {
