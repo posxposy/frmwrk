@@ -9,6 +9,11 @@ abstract Mat4(Mat4Impl) from Mat4Impl {
 	public static inline function indent():Mat4 {
 		return new Mat4(Mat4Impl.create(1.0));
 	}
+
+	@:op(A * B)
+	public inline function mult(vec:Mat4):Mat4 {
+		return untyped __cpp__('{0} * {1}', this, vec);
+	}
 }
 
 @:unreflective

@@ -8,12 +8,15 @@ import cpp.Void;
 @:include('./GlmHeaders.h')
 @:native('glm')
 extern class Glm {
-	@:overload(function(v1:Vec2f, v2:Vec2f):Vec2f {})
+	@:overload(function(v1:Vec2f, v2:Vec2f):Vec2f {
+	})
 	@:native('glm::cross') public static function cross(v1:Vec3f, v2:Vec3f):Vec3f;
 
-	@:overload(function(v:Vec2f):Vec2f {})
+	@:overload(function(v:Vec2f):Vec2f {
+	})
 	@:native('glm::normalize') public static function normalize(v:Vec3f):Vec3f;
 
+	@:native('glm::ortho') public static function ortho(left:Single, right:Single, bottom:Single, top:Single, near:Single, far:Single):Mat4;
 	@:native('glm::radians') public static function radians(degrees:Single):Single;
 	@:native('glm::perspective') public static function perspective(fovy:Single, aspect:Single, zNear:Single, zFar:Single):Mat4;
 	@:native('glm::lookAt') public static function lookAt(eye:Vec3f, center:Vec3f, up:Vec3f):Mat4;
