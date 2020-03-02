@@ -74,6 +74,22 @@ extern enum abstract States(UInt64_t) to UInt64_t from UInt64_t {
 	var LinesStrip;
 	@:native('BGFX_STATE_PT_POINTS')
 	var Points;
+	@:native('BGFX_STATE_BLEND_ADD')
+	var BlendAdd;
+	@:native('BGFX_STATE_BLEND_ALPHA')
+	var BlendAlpha;
+	@:native('BGFX_STATE_BLEND_DARKEN')
+	var BlendDarken;
+	@:native('BGFX_STATE_BLEND_LIGHTEN')
+	var BlendLighten;
+	@:native('BGFX_STATE_BLEND_MULTIPLY')
+	var BlendMultiply;
+	@:native('BGFX_STATE_BLEND_NORMAL')
+	var BlendNormal;
+	@:native('BGFX_STATE_BLEND_SCREEN')
+	var BlendScreen;
+	@:native('BGFX_STATE_BLEND_LINEAR_BURN')
+	var BlendLinearBurn;
 
 	@:op(A | B)
 	public inline function bitwiseOr(v:States):States {
