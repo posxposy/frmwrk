@@ -77,7 +77,7 @@ final class Frmwrk {
 	final gameTime:GameTime;
 
 	public function new() {
-		gfx = new Gfx(0);
+		gfx = new Gfx();
 		gameTime = new GameTime();
 	}
 
@@ -139,10 +139,10 @@ final class Frmwrk {
 			glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mode) {
 				switch (action) {
 				case GLFW_PRESS:
-					::frmwrk::IApp_obj::onKeyDown({1}, key);
+					::frmwrk::IApp_obj::onKeyDown({0}, key);
 					break;
 				case GLFW_RELEASE:
-					::frmwrk::IApp_obj::onKeyUp({1}, key);
+					::frmwrk::IApp_obj::onKeyUp({0}, key);
 					break;
 				default:
 					break;
@@ -150,44 +150,34 @@ final class Frmwrk {
 			});
 
 			glfwSetCursorPosCallback(window, [](GLFWwindow *window, double x, double y) {
-				::frmwrk::IApp_obj::onMouseMove({1}, x, y);
+				::frmwrk::IApp_obj::onMouseMove({0}, x, y);
 			});
 			glfwSetScrollCallback(window, [](GLFWwindow *window, double x, double y) {
-				::frmwrk::IApp_obj::onMouseScroll({1}, y);
+				::frmwrk::IApp_obj::onMouseScroll({0}, y);
 			});
 			glfwSetMouseButtonCallback(window, [](GLFWwindow *window, int button, int action, int mods) {
 				switch (action) {
 				case GLFW_PRESS:
-					::frmwrk::IApp_obj::onMouseDown({1}, button);
+					::frmwrk::IApp_obj::onMouseDown({0}, button);
 					break;
 				case GLFW_RELEASE:
-					::frmwrk::IApp_obj::onMouseUp({1}, button);
+					::frmwrk::IApp_obj::onMouseUp({0}, button);
 					break;
 				default:
 					break;
 				}
 			});
+		', _game);
 
-			const bgfx::ViewId clearViewId = {0};
-		', @:privateAccess gfx.viewId, _game);
-
-		gfx.clearColor(0x443355FF);
 		while (!glfwWindowShouldClose(window)) {
 			gameTime.begin();
 
-			untyped __cpp__('
-				glfwPollEvents();
-				bgfx::touch(clearViewId);
-			', width, height, window, isVsyncEnabled);
+			untyped __cpp__('glfwPollEvents()'); //glfwWaitEvents
 
 			game.onUpdate(gameTime);
 			game.onDraw(gfx);
 
-			untyped __cpp__('
-				bgfx::setDebug({0} ? BGFX_DEBUG_STATS : BGFX_DEBUG_TEXT);
-				bgfx::frame()
-			', showDebugStats);
-
+			untyped __cpp__('bgfx::setDebug({0} ? BGFX_DEBUG_STATS : BGFX_DEBUG_TEXT)', showDebugStats);
 			gameTime.end();
 		}
 

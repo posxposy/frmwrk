@@ -1,6 +1,8 @@
 package frmwrk;
 
+import bgfx.FrameBufferHandle;
 import bgfx.InstanceDataBuffer;
+import bgfx.TextureHandle;
 import bgfx.UniformHandle;
 import cpp.Star;
 import frmwrk.States;
@@ -15,22 +17,31 @@ import frmwrk.math.Mat4;
 ')
 @:allow(frmwrk.Frmwrk)
 final class Gfx {
-	final viewId:Int;
-
-	private function new(viewId:Int) {
-		this.viewId = viewId;
+	private function new() {
 	}
 
-	public function setViewRect(id:Int, x:Int, y:Int, w:Int, h:Int):Void {
-		untyped __cpp__('bgfx::setViewRect({0}, {1}, {2}, {3}, {4})', id, x, y, w, h);
+	public function frame():Void {
+		untyped __cpp__('bgfx::frame()');
+	}
+
+	public function touch(viewId:Int = 0):Void {
+		untyped __cpp__('bgfx::touch({0})', viewId);
+	}
+
+	public function setViewRect(x:Int, y:Int, w:Int, h:Int, viewId:Int = 0):Void {
+		untyped __cpp__('bgfx::setViewRect({0}, {1}, {2}, {3}, {4})', viewId, x, y, w, h);
 	}
 
 	/**
 		Set view clear flags.
 		@param color
 	 */
-	public function clearColor(color:Int):Void {
+	public function clearColor(color:Int, viewId:Int = 0):Void {
 		untyped __cpp__('bgfx::setViewClear({0}, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, {1}, 1.0f, 0)', viewId, color);
+	}
+
+	public function clearColorOnly(color:Int, viewId:Int = 0):Void {
+		untyped __cpp__('bgfx::setViewClear({0}, BGFX_CLEAR_COLOR, {1}, 1.0f, 0)', viewId, color);
 	}
 
 	/**
@@ -45,7 +56,11 @@ final class Gfx {
 		untyped __cpp__('bgfx::dbgTextClear()');
 	}
 
-	public function setVertexBuffer(vb:VertexBuffer):Void {
+	public function setViewFrameBuffer(handle:FrameBufferHandle, viewId:Int):Void {
+		untyped __cpp__('bgfx::setViewFrameBuffer({0}, {1})', viewId, handle);
+	}
+
+	public function setVertexBuffer(vb:VertexBuffer, viewId:Int = 0):Void {
 		untyped __cpp__('bgfx::setVertexBuffer({0}, {1}->vbh)', viewId, vb);
 	}
 
@@ -53,11 +68,11 @@ final class Gfx {
 		untyped __cpp__('bgfx::setIndexBuffer({0}->ibh)', ib);
 	}
 
-	public function submit(program:Program):Void {
+	public function submit(program:Program, viewId:Int = 0):Void {
 		untyped __cpp__('bgfx::submit({0}, {1}->program)', viewId, program);
 	}
 
-	public function setViewTransform(view:Mat4, projection:Mat4):Void {
+	public function setViewTransform(view:Mat4, projection:Mat4, viewId:Int = 0):Void {
 		untyped __cpp__('bgfx::setViewTransform({0}, {1}, {2})', viewId, Glm.valuePtr(view), Glm.valuePtr(projection));
 	}
 
@@ -65,8 +80,12 @@ final class Gfx {
 		untyped __cpp__('bgfx::setTransform({0})', Glm.valuePtr(matrix));
 	}
 
-	public function setTexture(uniform:UniformHandle, texture:Texture2D):Void {
-		untyped __cpp__('bgfx::setTexture(0, {0},  {1}->handle)', uniform, texture);
+	public function setTexture(uniform:UniformHandle, texture:Texture2D, stage:Int = 0):Void {
+		inline setTextureHandle(uniform, @:privateAccess texture.handle, stage);
+	}
+
+	public function setTextureHandle(uniform:UniformHandle, handle:TextureHandle, stage:Int = 0):Void {
+		untyped __cpp__('bgfx::setTexture({2}, {0},  {1})', uniform, handle, stage);
 	}
 
 	public function setFloat1Uniform(uniform:UniformHandle, x:Single = 0.0):Void {
