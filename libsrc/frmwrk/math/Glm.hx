@@ -12,7 +12,13 @@ extern class Glm {
 	})
 	@:native('glm::cross') public static function cross(v1:Vec3f, v2:Vec3f):Vec3f;
 
+	@:overload(function(v1:Vec2f, v2:Vec2f):Vec2f {
+	})
+	@:native('glm::dot') public static function dot(v1:Vec3f, v2:Vec3f):Vec3f;
+
 	@:overload(function(v:Vec2f):Vec2f {
+	})
+	@:overload(function(v:Vec4f):Vec4f {
 	})
 	@:native('glm::normalize') public static function normalize(v:Vec3f):Vec3f;
 
@@ -25,6 +31,8 @@ extern class Glm {
 	@:native('glm::rotate') public static function rotate(m:Mat4, radians:Single, v:Vec3f):Mat4;
 	@:native('glm::value_ptr') public static function valuePtr(m:Mat4):Star<Void>;
 	@:native('glm::pi<float>') public static function pi():Single;
+	@:native('glm::toMat4') public static function toMat(quat:Quat):Mat4;
+	@:native('glm::inverse') public static function inverse(m:Mat4):Mat4;
 
 	public static inline function matToString(m:Mat4):String {
 		final chars:ConstCharStar = untyped __cpp__('glm::to_string({0}).c_str()', m);
