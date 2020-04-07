@@ -11,10 +11,30 @@ import haxe.io.Float32Array;
 extern enum abstract LayoutAttrib(Attrib) {
 	@:native('bgfx::Attrib::Position')
 	var Position;
+	@:native('bgfx::Attrib::Normal')
+	var Normal;
+	@:native('bgfx::Attrib::Tangent')
+	var Tangent;
+	@:native('bgfx::Attrib::Bitangent')
+	var Bitangent;
 	@:native('bgfx::Attrib::Color0')
 	var Color0;
 	@:native('bgfx::Attrib::TexCoord0')
 	var TexCoord0;
+	@:native('bgfx::Attrib::TexCoord1')
+	var TexCoord1;
+	@:native('bgfx::Attrib::TexCoord2')
+	var TexCoord2;
+	@:native('bgfx::Attrib::TexCoord3')
+	var TexCoord3;
+	@:native('bgfx::Attrib::TexCoord4')
+	var TexCoord4;
+	@:native('bgfx::Attrib::TexCoord5')
+	var TexCoord5;
+	@:native('bgfx::Attrib::TexCoord6')
+	var TexCoord6;
+	@:native('bgfx::Attrib::TexCoord7')
+	var TexCoord7;
 }
 
 extern enum abstract LayoutAttribType(AttribType) {
