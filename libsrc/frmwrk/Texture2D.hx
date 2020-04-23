@@ -23,8 +23,8 @@ import haxe.io.Bytes;
 	}
 ')
 class Texture2D {
-	public final width:Int;
-	public final height:Int;
+	public final width:Int = 10;
+	public final height:Int = 10;
 
 	extern var handle:TextureHandle;
 	extern var container:Star<ImageContainer>;
@@ -34,20 +34,16 @@ class Texture2D {
 	@:allow(frmwrk.Res)
 	function new(path:String, data:Bytes, flags:TextureFlags) {
 		this.path = path;
+
 		untyped __cpp__('
 			bx::DefaultAllocator allocator;
 			{2} = bimg::imageParse(&allocator, (const void*)&({0}[0]), (uint32_t){1});
 
-			const bgfx::Memory* mem = bgfx::makeRef(
-				{2}->m_data
-			, {2}->m_size
-			//, imageReleaseCb
-			//, {2}
-			);
+			const bgfx::Memory* mem = bgfx::makeRef({2}->m_data, {2}->m_size);
 
 			{3} = bgfx::createTexture2D(
-				uint16_t({2}->m_width)
-			, uint16_t({2}->m_height)
+				{2}->m_width
+			, {2}->m_height
 			, 1 < {2}->m_numMips
 			, {2}->m_numLayers
 			, bgfx::TextureFormat::Enum({2}->m_format)
@@ -58,6 +54,10 @@ class Texture2D {
 
 		width = untyped __cpp__('{0}->m_width', container);
 		height = untyped __cpp__('{0}->m_height', container);
+	}
+
+	public inline extern function getHandle():TextureHandle {
+		return untyped __cpp__('{0}->handle', this);
 	}
 
 	public function dispose():Void {
