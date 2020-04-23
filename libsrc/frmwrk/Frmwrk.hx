@@ -92,12 +92,12 @@ final class Frmwrk {
 				return false;
 			}
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-			window = glfwCreateWindow({1}, {2}, "helloworld", {3} ? glfwGetPrimaryMonitor() : nullptr, nullptr);
+			window = glfwCreateWindow({1}, {2}, {0}, {3} ? glfwGetPrimaryMonitor() : nullptr, nullptr);
 			if (!window) {
 				return false;
 			}
 
-			//bgfx::renderFrame();
+			bgfx::renderFrame();
 			bgfx::Init init;
 			init.type = {5};
 			init.resolution.width = {1};
@@ -148,10 +148,6 @@ final class Frmwrk {
 					break;
 				}
 			});
-
-			glfwSetCursorPosCallback(window, [](GLFWwindow *window, double x, double y) {
-				::frmwrk::IApp_obj::onMouseMove({0}, x, y);
-			});
 			glfwSetScrollCallback(window, [](GLFWwindow *window, double x, double y) {
 				::frmwrk::IApp_obj::onMouseScroll({0}, y);
 			});
@@ -171,8 +167,12 @@ final class Frmwrk {
 
 		while (!glfwWindowShouldClose(window)) {
 			gameTime.begin();
+			untyped __cpp__('glfwPollEvents()');
 
-			untyped __cpp__('glfwPollEvents()'); //glfwWaitEvents
+			var x:cpp.Float64 = 0.0;
+			var y:cpp.Float64 = 0.0;
+			untyped __cpp__('glfwGetCursorPos({0}, &{1}, &{2});', window, x, y);
+			game.onMouseMove(Std.int(x), Std.int(y));
 
 			game.onUpdate(gameTime);
 			game.onDraw(gfx);
