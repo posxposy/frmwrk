@@ -30,6 +30,14 @@ abstract Vec2f(Vec2fImpl) from Vec2fImpl {
 	public inline function multf(value:Single):Vec2f {
 		return untyped __cpp__('{0} * (float){1}', this, value);
 	}
+
+	public inline function clone():Vec2f {
+		return new Vec2f(this.x, this.y);
+	}
+
+	public inline function toString():String {
+		return 'Vec2f(${this.x}, ${this.y})';
+	}
 }
 
 @:unreflective

@@ -30,6 +30,14 @@ abstract Vec4f(Vec4fImpl) from Vec4fImpl {
 	public inline function multf(value:Single):Vec4f {
 		return untyped __cpp__('{0} * (float){1}', this, value);
 	}
+
+	public inline function clone():Vec4f {
+		return new Vec4f(this.x, this.y, this.z, this.w);
+	}
+
+	public inline function toString():String {
+		return 'Vec4f(${this.x}, ${this.y}, ${this.z}, ${this.w})';
+	}
 }
 
 @:unreflective

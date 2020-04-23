@@ -30,6 +30,14 @@ abstract Vec3f(Vec3fImpl) from Vec3fImpl {
 	public inline function multf(value:Single):Vec3f {
 		return untyped __cpp__('{0} * (float){1}', this, value);
 	}
+
+	public inline function clone():Vec3f {
+		return new Vec3f(this.x, this.y, this.z);
+	}
+
+	public inline function toString():String {
+		return 'Vec3f(${this.x}, ${this.y}, ${this.z})';
+	}
 }
 
 @:unreflective

@@ -22,6 +22,12 @@ extern class Glm {
 	})
 	@:native('glm::normalize') public static function normalize(v:Vec3f):Vec3f;
 
+	@:overload(function(v:Vec2f):Single {
+	})
+	@:overload(function(v:Vec4f):Single {
+	})
+	@:native('glm::length') public static function length(v:Vec3f):Single;
+
 	@:native('glm::ortho') public static function ortho(left:Single, right:Single, bottom:Single, top:Single, near:Single, far:Single):Mat4;
 	@:native('glm::radians') public static function radians(degrees:Single):Single;
 	@:native('glm::perspective') public static function perspective(fovy:Single, aspect:Single, zNear:Single, zFar:Single):Mat4;
