@@ -30,11 +30,8 @@ final class Program {
 		fsh = createShader(fshMemory);
 	}
 
-	public function createUniform(name:String, type:UniformType):UniformHandle {
-		return untyped __cpp__('bgfx::createUniform({0}.c_str(),  {1});', name, type);
-	}
-
-	public function setUniform():Void {
+	public function createUniform(name:String, type:UniformType, num:Int = 1):UniformHandle {
+		return untyped __cpp__('bgfx::createUniform({0}.c_str(), {1}, {2});', name, type, num);
 	}
 
 	public function compile():Void {
