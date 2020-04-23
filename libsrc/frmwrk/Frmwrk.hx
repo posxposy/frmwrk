@@ -1,9 +1,19 @@
 package frmwrk;
 
 import bgfx.RenderType;
+import cpp.ConstStar;
 import frmwrk.input.MouseMode;
 import haxe.io.Bytes;
 import sys.io.File;
+
+typedef InitSettingsStruct = {
+	title:String,
+	?height:Int,
+	?width:Int,
+	?vsync:Bool,
+	?fullscreen:Bool,
+	?renderType:RendererType
+}
 
 @:buildXml('
 	<files id="haxe">
@@ -65,10 +75,11 @@ import sys.io.File;
 ')
 @:headerInclude('./HelpersExt.h')
 final class Frmwrk {
-	public var showDebugStats:Bool = true;
+	static var _game:IApp;
+
+	public var showDebugStats:Bool = #if debug true #else false #end;
 	public var width(default, null):Int;
 	public var height(default, null):Int;
-	public var renderer(default, null):RendererType;
 
 	extern var window:GLFWwindow;
 	var isVsyncEnabled:Bool;
@@ -81,16 +92,22 @@ final class Frmwrk {
 		gameTime = new GameTime();
 	}
 
-	public function init(renderer:RendererType, title:String, width:Int, height:Int, isFullScreen:Bool = false, isVsyncEnabled:Bool = false):Bool {
-		this.width = width;
-		this.height = height;
-		this.renderer = renderer;
-		this.isVsyncEnabled = isVsyncEnabled;
+	//renderer:RendererType, title:String, isFullScreen:Bool = false, isVsyncEnabled:Bool = false, ?width:Int, ?height:Int
+	public function init(o:InitSettingsStruct, renderer:RendererType):Bool {
+		if (!glfwInit()) {
+			return false;
+		}
+		final videoMode = getPrimaryMonitorVideoMode();
+
+		this.width = o.width == null ? videoMode.width : o.width;
+		this.height = o.height == null ? videoMode.height : o.height;
+		this.isVsyncEnabled = o.vsync == null ? true : o.vsync;
+		final isFullScreen:Bool = o.fullscreen == null ? true : o.fullscreen;
+		final title = o.title;
+
+		videoMode.delete();
 
 		untyped __cpp__('
-			if (!glfwInit()) {
-				return false;
-			}
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 			window = glfwCreateWindow({1}, {2}, {0}, {3} ? glfwGetPrimaryMonitor() : nullptr, nullptr);
 			if (!window) {
@@ -131,8 +148,6 @@ final class Frmwrk {
 		return true;
 	}
 
-	static var _game:IApp;
-
 	public function run(game:IApp):Void {
 		_game = game;
 		untyped __cpp__('
@@ -165,7 +180,7 @@ final class Frmwrk {
 			});
 		', _game);
 
-		while (!glfwWindowShouldClose(window)) {
+		while (!glfwWindowShouldClose()) {
 			gameTime.begin();
 			untyped __cpp__('glfwPollEvents()');
 
@@ -199,19 +214,38 @@ final class Frmwrk {
 		', window, mode);
 	}
 
-	inline extern function glfwWindowShouldClose(window:GLFWwindow):Bool {
+	inline extern function glfwInit():Bool {
+		return untyped __cpp__('glfwInit()');
+	}
+
+	inline extern function getPrimaryMonitorVideoMode():ConstStar<GLFWvidmode> {
+		return untyped __cpp__('glfwGetVideoMode(glfwGetPrimaryMonitor())');
+	}
+
+	inline function glfwWindowShouldClose():Bool {
 		return untyped __cpp__('glfwWindowShouldClose({0})', window);
 	}
 }
 
 @:unreflective
-@:native('const bgfx::Memory *')
-@:include('bgfx/bgfx.h')
-extern class BgfxMemory {
-}
-
-@:unreflective
 @:native('GLFWwindow *')
 @:include('GLFW/glfw3.h')
-extern class GLFWwindow {
+private extern class GLFWwindow {
+}
+
+@:structAccess
+@:unreflective
+@:native('GLFWvidmode')
+@:include('GLFW/glfw3.h')
+private extern class GLFWvidmode {
+	public var width:Int;
+	public var height:Int;
+	public var redBits:Int;
+	public var greenBits:Int;
+	public var blueBits:Int;
+	public var refreshRate:Int;
+
+	public inline function delete():Void {
+		untyped __cpp__('delete {0}', this);
+	}
 }
